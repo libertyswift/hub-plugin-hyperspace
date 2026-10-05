@@ -1,0 +1,8 @@
+/* Градиенты темы (плагин hyperspace): заливка пяти поверхностей из блока "gradients" выбранной темы.
+   Класс hx-<поверхность> на <html> ставит main.js, только когда у темы есть эта поверхность. */
+html.hx-page body { background: var(--hx-page); background-attachment: fixed; }
+html.hx-sidebar aside { background: var(--hx-sidebar); }
+html.hx-header main > .head { background: var(--hx-header); }
+html.hx-footer main > .dock { background: var(--hx-footer); border-top: 1px solid var(--border); padding-top: var(--space-3); }
+html.hx-primary .btn.primary, html.hx-primary .btn.round.send { background: var(--hx-primary); }
+html.hx-flow { --flow-msg: var(--hx-flow-msg); --flow-task: var(--hx-flow-task); --flow-result: var(--hx-flow-result); }
