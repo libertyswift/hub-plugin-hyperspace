@@ -6,3 +6,9 @@ html.hx-header main > .head { background: var(--hx-header); }
 html.hx-footer main > .dock { background: var(--hx-footer); border-top: 1px solid var(--border); padding-top: var(--space-3); }
 html.hx-primary .btn.primary, html.hx-primary .btn.round.send { background: var(--hx-primary); }
 html.hx-flow { --flow-msg: var(--hx-flow-msg); --flow-task: var(--hx-flow-task); --flow-result: var(--hx-flow-result); }
+/* как редактор на картинке владельца (06.10, после редизайна страницы): окно во весь экран, без «плиток» с отступами
+   и скруглениями; панель слева встык, граница — линией; градиент фона — в самой рабочей области, а не под ней */
+html.hx-page .app { --gap: 0px; padding: 0; column-gap: 0; }
+html.hx-page main, html.hx-page .side { border-radius: 0; box-shadow: none; background: var(--hx-page); }
+html.hx-page .app > aside { border-right: 1px solid var(--border); }
+html.hx-page .app.with-side .side { border-left: 1px solid var(--border); }
