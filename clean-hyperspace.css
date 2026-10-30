@@ -1,0 +1,105 @@
+/* Плагин hyperspace: тёмная тема Clean (kalimullin/hub-plugin-clean) в цветах Hyperspace. Цвета темы страница пишет в
+   style у <html>, поэтому их перебивает !important; переменные --c-* самой Clean — обычным правилом. Все правила — только
+   под html.th-clean.th-clean-dark: без Clean и её тёмного варианта ничего не меняется. */
+html.th-clean.th-clean-dark {
+  /* заливки (поле ввода, ваши сообщения, меню) — сине-серые, как выделенные строки в Hyperspace, а не сиреневые */
+  --background: #1c2340 !important; --card: #262c43 !important; --foreground: #dfe1fa !important;
+  --muted: #2a3048 !important; --muted-2: #333a52 !important; --muted-foreground: #7f86a8 !important;
+  --accent: #2a3048 !important; --input: #3a4159 !important;
+  --border: color-mix(in oklch, #dfe1fa 22%, #1c2340) !important;
+  /* шрифты, близкие к Hyperspace: интерфейс — геометрический Avenir Next, код — SF Mono (оба есть в macOS) */
+  --font: "Avenir Next", -apple-system, system-ui, sans-serif !important;
+  --font-code: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace !important; --font-mono: var(--font-code) !important;
+  --primary: #8b63f2 !important; --primary-foreground: #ffffff !important; --ring: #a98af7 !important;
+  --code: #f0518f !important; --hl-attr: #5aa6ff !important; --success: #8be36b !important; --warning: #f5c26b !important;
+  --destructive: #ff6e85 !important;
+  --c-shell: #151a32;
+  --c-alert: #e2619f;   /* розовый, как точка на колокольчике в Hyperspace, вместо красного */
+  --c-fill: rgb(150 160 255 / 0.08); --c-hover: rgb(150 160 255 / 0.06); --c-badge: rgb(150 160 255 / 0.16);
+  --c-line: rgb(150 160 255 / 0.18); --c-line-soft: rgb(150 160 255 / 0.10); --c-line-strong: rgb(170 150 255 / 0.5);
+  --c-t1: rgb(223 225 250 / 0.92); --c-t2: rgb(223 225 250 / 0.62); --c-t3: rgb(223 225 250 / 0.32);
+  --c-free: #8be36b; --c-free-bg: #1d3a3a; --c-busy: #f5c26b; --c-busy-bg: #3a3350;
+  --c-key: 0 0 0 1px rgb(150 160 255 / 0.16), 0 1px 2px #0000004d;
+  --c-field: 0 0 2px #00000066, 0 2px 4px #0000004d, 0 10px 28px #0a0a2a99;}
+/* фон страницы — тёмный (--c-shell), как у Clean; панели — тёмно-синие с лёгким градиентом */
+html.th-clean.th-clean-dark, html.th-clean.th-clean-dark body { background: #151a32; }
+/* окно цельное, как в Hyperspace: панели встык, без зазоров и скруглений. Сверху одна полоса заголовка высотой --hs-bar
+   через все колонки: по краям окна темнее, к центру светлее (у каждой панели — свой кусок одного горизонтального градиента).
+   Под полосой — свечение из центра: ярче всего у ленты (в Hyperspace там код), список слева чуть темнее, правая панель
+   (там дерево файлов) нейтральнее и внизу темнее всех. Цвета сняты пипеткой по сетке точек. */
+html.th-clean.th-clean-dark { --hs-bar: 60px;
+  --hs-line: linear-gradient(rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.035)) 0 calc(var(--hs-bar) - 1px) / 100% 1px no-repeat;
+  --hubapp-bar: linear-gradient(90deg, #262b42, #30364d 19%, #393f56 48%, #363c53 72%, #282d44); }   /* полоса окна-приложения (hub-app) */
+html.th-clean.th-clean-dark .app { --gap: 0px; padding: 0; column-gap: 0; }
+html.th-clean.th-clean-dark :is(main, .side, aside) { border-radius: 0; box-shadow: none; }
+html.th-clean.th-clean-dark aside { background:
+    var(--hs-line),
+    linear-gradient(90deg, #262b42, #30364d) 0 0 / 100% var(--hs-bar) no-repeat,
+    linear-gradient(90deg, transparent 40%, rgb(150 165 230 / 0.035)),
+    linear-gradient(180deg, #313a52 0, #2b3249 15%, #222940 36%, #1d243b 60%, #1c233c 100%); }
+html.th-clean.th-clean-dark main { background:
+    var(--hs-line),
+    linear-gradient(90deg, #30364d, #393f56 45%, #373d54 70%, #2f344b) 0 0 / 100% var(--hs-bar) no-repeat,
+    radial-gradient(ellipse 65% 42% at 42% var(--hs-bar), rgb(120 140 200 / 0.10), transparent),
+    linear-gradient(90deg, rgb(255 255 255 / 0.012), transparent 55%, rgb(0 0 20 / 0.06)),
+    linear-gradient(180deg, #384159 0, #313a52 15%, #272e47 35%, #1e2840 60%, #1b223f 100%); }
+html.th-clean.th-clean-dark .side { background:
+    var(--hs-line),
+    linear-gradient(90deg, #2f344b, #292e45) 0 0 / 100% var(--hs-bar) no-repeat,
+    linear-gradient(90deg, rgb(150 160 210 / 0.035), transparent 65%),
+    linear-gradient(180deg, #3b4258 0, #2f3549 15%, #23293d 35%, #1b2339 60%, #181d34 100%); }
+html.th-clean.th-clean-dark aside { padding-top: 0; }
+/* «Все | Сейчас» — не вплотную к полосе заголовка */
+html.th-clean.th-clean-dark aside .active-bar { margin-top: 12px; margin-bottom: 4px; }
+/* низ списка (меню, лимиты) — своя подложка, как строка с аватаркой в Hyperspace: чуть светлее и синее панели */
+html.th-clean.th-clean-dark .aside-foot { margin: 0 -12px -8px; box-sizing: border-box; height: 56px; min-height: 56px; padding: 0 24px 0 72px; background: linear-gradient(180deg, #222a47, #1f2744); box-shadow: 0 -1px 0 rgb(150 160 210 / 0.07); }
+html.th-clean.th-clean-dark .navmenu { background: rgb(150 165 230 / 0.10); bottom: 10px; }
+html.th-clean.th-clean-dark .clean-lim { column-gap: 16px; }
+html.th-clean.th-clean-dark .clean-lim .limseg { gap: 10px; }   /* «5 ч» и «2%» — не впритык */
+/* ваши сообщения и поле ввода — сине-серым стеклом поверх градиента панели, рамка едва видна */
+html.th-clean.th-clean-dark .row.mine > .b { background: rgb(150 165 225 / 0.09); box-shadow: inset 0 0 0 1px rgb(150 165 225 / 0.06); }
+html.th-clean.th-clean-dark form.composer { background: linear-gradient(180deg, #2a3149, #242a41);
+  box-shadow: inset 0 0 0 1px rgb(150 165 225 / 0.10), 0 8px 24px #0a0e2266; }
+html.th-clean.th-clean-dark form.composer:focus-within { box-shadow: inset 0 0 0 1px rgb(170 150 255 / 0.45), 0 8px 24px #0a0e2266; }
+html.th-clean.th-clean-dark .app > aside { border-right: 1px solid rgb(150 160 255 / 0.10); }
+html.th-clean.th-clean-dark .app.with-side .side { border-left: 1px solid rgb(150 160 255 / 0.10); }
+/* заголовок сессии — шрифтом темы (у Clean он Lora с засечками), как заголовок окна в Hyperspace */
+html.th-clean.th-clean-dark main > .head h2 { font: 600 18px/24px var(--font); letter-spacing: 0; }
+/* шапки трёх колонок — одна высота, свой фон не рисуют */
+html.th-clean.th-clean-dark main > .head { box-sizing: border-box; height: var(--hs-bar); min-height: var(--hs-bar); padding-block: 0; background: none; border-bottom: 0; }
+html.th-clean.th-clean-dark aside .search-row { box-sizing: border-box; height: var(--hs-bar); padding-block: 0; align-items: center; background: none; }
+html.th-clean.th-clean-dark .side .chg > :first-child { box-sizing: border-box; min-height: var(--hs-bar); background: none; border-bottom: 0; }
+html.th-clean.th-clean-dark main > .dock { background: transparent; }
+/* кнопка и акцент — фиолетовые */
+html.th-clean.th-clean-dark :is(.btn.round.send, .btn.primary, .btn.solid) {
+  background: linear-gradient(180deg, #9a76f6, #7a55ea); color: #fff; border-color: transparent;
+}
+html.th-clean.th-clean-dark .btn.round.send:hover { background: linear-gradient(180deg, #a98af7, #8760f0); }
+/* подсветка кода как в Hyperspace (цвета сняты с его кода): объявления (var, function) — синие, управление (if, else,
+   return …) и операторы — розовые, ключи объекта — жёлтые, строки — зелёные, true/false и числа — фиолетовые,
+   параметры — розовые, классы — синие, вызовы и свойства — цветом текста, комментарии почти сливаются с фоном.
+   Управляющие слова и операторы highlight.js не различает — их помечает main.js (hs-ctl, hs-op). */
+/* код в Hyperspace лежит прямо на панели: плашка едва видна, строки разрежены (шаг ≈ 2,2 шрифта), поля широкие,
+   номера строк тусклые и далеко от кода, текст светлый */
+html.th-clean.th-clean-dark { --code-bg: rgb(8 12 32 / 0.16) !important; }
+html.th-clean.th-clean-dark :is(.md pre, .tool pre) { background: var(--code-bg); padding: 14px 20px; }   /* у Clean плашка — --muted */
+html.th-clean.th-clean-dark :is(.md pre, .tool pre, pre.hljs) { font: 500 13px/28px var(--font-code); tab-size: 4; }
+html.th-clean.th-clean-dark .hljs { color: #d3d7ea; font-weight: 500; }   /* в Hyperspace код плотный: тонкое начертание размывает цвета */
+html.th-clean.th-clean-dark :is(.hljs-keyword, .hljs-selector-tag, .hljs-meta .hljs-keyword) { color: #8f9cfb; }
+html.th-clean.th-clean-dark .hljs-keyword.hs-fn { color: #6aa3ff; }   /* function, def… — голубее */
+html.th-clean.th-clean-dark .hljs-keyword.hs-ctl { color: #ea65a0; }
+html.th-clean.th-clean-dark .hs-op { color: #e2609b; }
+html.th-clean.th-clean-dark :is(.hljs-string, .hljs-regexp, .hljs-template-tag, .hljs-template-variable) { color: #a8de7c; }
+html.th-clean.th-clean-dark :is(.hljs-number, .hljs-literal, .hljs-symbol, .hljs-bullet, .hljs-variable.constant_) { color: #8f72f4; }
+html.th-clean.th-clean-dark :is(.hljs-attr, .hljs-attribute, .hljs-selector-class, .hljs-section) { color: #f5c878; }
+html.th-clean.th-clean-dark :is(.hljs-params, .hljs-variable) { color: #ea65a0; }
+html.th-clean.th-clean-dark :is(.hljs-title, .hljs-title.function_, .hljs-property, .hljs-variable.language_) { color: #e2e5f3; }
+html.th-clean.th-clean-dark :is(.hljs-title.class_, .hljs-type, .hljs-built_in, .hljs-name, .hljs-selector-id) { color: #74a0ff; }
+html.th-clean.th-clean-dark :is(.hljs-comment, .hljs-quote, .hljs-meta) { color: #4a5180; }
+html.th-clean.th-clean-dark :is(pre.numbered .ln .mk, pre.patch .ln:not(.del, .add) .mk) { color: #474d6b; }
+/* номер строки отдельно от кода, как столбец номеров в Hyperspace: +2 знака к отступу строки */
+html.th-clean.th-clean-dark :is(pre.patch, pre.numbered) { line-height: 20px; }   /* перенос длинной строки — плотно, */
+html.th-clean.th-clean-dark :is(pre.patch, pre.numbered) .ln { padding: 4px 0 4px 9ch; text-indent: -9ch; }   /* шаг строк — 28 */
+html.th-clean.th-clean-dark :is(pre.patch, pre.numbered) .ln .mk { display: inline-block; width: 9ch; text-indent: 0; }
+/* розовая заливка (--c-alert): белый текст на ней 3,3:1, тёмный — 5,6:1: на плашках берём тёмный */
+html.th-clean.th-clean-dark :is(.srow .tag:not(.soft), main > .head .pill:is([data-s="dialog"], [data-s="failed"])) { background: var(--c-alert); color: #1a1030; }
