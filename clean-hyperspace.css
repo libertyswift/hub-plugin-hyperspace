@@ -67,6 +67,8 @@ html.th-clean.th-clean-dark .app.with-side .side { border-left: 1px solid rgb(15
 html.th-clean.th-clean-dark main > .head h2 { font: 600 18px/24px var(--font); letter-spacing: 0; }
 /* шапки трёх колонок — одна высота, свой фон не рисуют */
 html.th-clean.th-clean-dark main > .head { box-sizing: border-box; height: var(--hs-bar); min-height: var(--hs-bar); padding-block: 0; background: none; border-bottom: 0; }
+/* кнопка «показать список» при свёрнутом списке — по центру шапки ленты (шапка 60px, у Clean 56); --hubapp-top — полоса окна-приложения над колонками */
+html.th-clean.th-clean-dark .clean-fold-show { top: calc(var(--hubapp-top, 0px) + (var(--hs-bar) - 36px) / 2); }
 html.th-clean.th-clean-dark aside .search-row { box-sizing: border-box; height: var(--hs-bar); padding-block: 0; align-items: center; background: none; }
 html.th-clean.th-clean-dark .side .chg > :first-child { box-sizing: border-box; min-height: var(--hs-bar); background: none; border-bottom: 0; }
 html.th-clean.th-clean-dark main > .dock { background: transparent; }
