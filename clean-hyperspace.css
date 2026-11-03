@@ -67,6 +67,14 @@ html.th-clean.th-clean-dark .app.with-side .side { border-left: 1px solid rgb(15
 html.th-clean.th-clean-dark main > .head h2 { font: 600 18px/24px var(--font); letter-spacing: 0; }
 /* шапки трёх колонок — одна высота, свой фон не рисуют */
 html.th-clean.th-clean-dark main > .head { box-sizing: border-box; height: var(--hs-bar); min-height: var(--hs-bar); padding-block: 0; background: none; border-bottom: 0; }
+/* «Доска» направления: сводка «Доска: открыто N · … · Спросить, чего ждёт» (ядро кладёт её в .head-meta, Clean показывает только на доске)
+   — часть шапки под полосой заголовка. Здесь шапка не фиксированные --hs-bar, а растёт: первая строка по центру полосы, сводка сразу под ней */
+html.th-clean.th-clean-dark main:has(> .boards-body) > .head { height: auto; padding-top: calc((var(--hs-bar) - 26px) / 2); padding-bottom: 0; row-gap: 0; }
+html.th-clean.th-clean-dark main:has(> .boards-body) > .head .head-meta { margin-top: calc((var(--hs-bar) - 26px) / 2); padding: 4px 0 12px; }
+html.th-clean.th-clean-dark main:has(> .boards-body) > .head .dir-recap { color: var(--c-t2, var(--muted-foreground)); }
+html.th-clean.th-clean-dark main:has(> .boards-body) > .head .dir-recap > .btn { padding: 0 8px; border-radius: 6px; background: var(--c-fill, rgb(150 165 230 / 0.10)); color: var(--c-t1, var(--foreground)); }
+html.th-clean.th-clean-dark main:has(> .boards-body) > .head .dir-recap > .btn:hover:not(:disabled) { filter: brightness(1.25); }
+html.th-clean.th-clean-dark main:has(> .boards-body) > .head .dir-recap > .btn:disabled { opacity: .55; }
 /* кнопка «показать список» при свёрнутом списке — по центру шапки ленты (шапка 60px, у Clean 56); --hubapp-top — полоса окна-приложения над колонками */
 html.th-clean.th-clean-dark .clean-fold-show { top: calc(var(--hubapp-top, 0px) + (var(--hs-bar) - 36px) / 2); }
 html.th-clean.th-clean-dark .app.left-folded main > .head { padding-left: 70px; }   /* кнопка 22+36=58px, зазор до имени 12px */
