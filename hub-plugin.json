@@ -1,9 +1,9 @@
 {
   "name": "hyperspace",
   "icon": "icon.svg",
-  "description": "Тема Hyperspace: тёмно-фиолетовая, с градиентами фона, панели, шапки, подвала и кнопок, своими значками и аватарами; перекрашивает и тёмную тему Clean",
-  "why": "Мягкий фиолетово-синий фон и спокойные акценты — страница хаба в духе редактора Hyperspace, глазам легче в долгой работе",
-  "version": "1.1.2",
+  "description": "The Hyperspace theme: dark purple, with gradients on the background, panels, header, footer and buttons, its own icons and avatars; also recolors the dark Clean theme",
+  "why": "A soft purple-blue background and calm accents — the hub page in the spirit of the Hyperspace editor, easier on the eyes over long sessions",
+  "version": "1.1.3",
   "hub": "^1.7",
   "web": "main.js",
   "themes": [

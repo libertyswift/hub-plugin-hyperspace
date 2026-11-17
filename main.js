@@ -1,9 +1,9 @@
-// Плагин hyperspace (agents-hub): тема Hyperspace (hyperspace.json — во «Настройки» → «Тема») и то, чего встроенные темы не
-// умеют, — градиенты. У выбранной темы блок "gradients": {page, sidebar, header, footer, primary}: градиент
-// {"colors": [...], "angle": 180} (цвета равномерно) или цвет; "flow": {msg, task, result} — цвета «Потока».
-// "iconColors": {"icons", "avatars", <имя значка>, <эмодзи>} — цвет значков и аватаров темы: картинка служит
-// трафаретом (CSS-маска), цвет — отсюда; поштучный цвет главнее общего.
-// Работает для любой темы с этими блоками: смена темы — событие hub-theme, перечитываем выбранную.
+// hyperspace plugin (agents-hub): the Hyperspace theme (hyperspace.json — in "Settings" → "Theme") and what built-in themes
+// cannot do — gradients. The selected theme's "gradients" block: {page, sidebar, header, footer, primary}: a gradient
+// {"colors": [...], "angle": 180} (colors spread evenly) or a color; "flow": {msg, task, result} — the colors of "Flow".
+// "iconColors": {"icons", "avatars", <icon name>, <emoji>} — the color of the theme's icons and avatars: the picture is a
+// stencil (CSS mask), the color comes from here; a per-item color wins over the general one.
+// Works for any theme with these blocks: a theme change is the hub-theme event, we re-read the selected one.
 const SURF = ["page", "sidebar", "header", "footer", "primary"];
 
 function css(g) {
@@ -31,7 +31,7 @@ function sync() {
   paintAll();
 }
 
-// значки и аватары темы — трафаретом, цветом из iconColors (картинки — .kit-img с url в background-image)
+// the theme's icons and avatars — as a stencil, in the color from iconColors (the pictures are .kit-img with a url in background-image)
 function paint(node, colors) {
   const url = node.style.backgroundImage;
   if (!url || url === "none") return;
@@ -56,38 +56,38 @@ function paintAll() {
   if (!watcher) { watcher = new MutationObserver(run); watcher.observe(document.body, { childList: true, subtree: true }); }
 }
 
-// выбранная тема этого плагина поменялась в файле (цвета, значки, аватары) — взять свежую: встроенная «Тема» делает
-// это, только когда открыта её вкладка; перезагрузка — один раз, пока копия в браузере не совпадёт с файлом
+// this plugin's selected theme changed in the file (colors, icons, avatars) — take the fresh one: the built-in "Theme"
+// does that only while its tab is open; reload once, until the browser's copy matches the file
 async function refresh() {
   let cur = null;
   try { cur = JSON.parse(localStorage.getItem("hub.theme") || "null"); } catch { return; }
-  if (!cur || !String(cur.id).endsWith(":hyperspace.json")) return;   // id: <плагин>:hyperspace.json
+  if (!cur || !String(cur.id).endsWith(":hyperspace.json")) return;   // id: <plugin>:hyperspace.json
   try {
     const { themes } = await (await fetch("/api/themes")).json();
     const now = themes.find((x) => x.id === cur.id);
     const fresh = now && JSON.stringify({ id: now.id, theme: now.theme });
     if (fresh && fresh !== localStorage.getItem("hub.theme")) { localStorage.setItem("hub.theme", fresh); location.reload(); }
-  } catch { /* нет связи — останется прежняя копия */ }
+  } catch { /* no connection — the previous copy stays */ }
 }
 
-// Тёмная Clean (kalimullin/hub-plugin-clean) в цветах Hyperspace — clean-hyperspace.css, правила только под
-// html.th-clean.th-clean-dark. Подсветке кода, как в Hyperspace, нужны два различия, которых нет у highlight.js:
-// управляющие слова (if, else, return…) отдельно от объявлений (var, function) и операторы отдельно от текста. Помечаем их
-// в готовых блоках .hljs: класс hs-ctl и span.hs-op — только пока выбрана тёмная Clean.
+// The dark Clean in Hyperspace colors — clean-hyperspace.css, rules only under html.th-clean.th-clean-dark. Code
+// highlighting as in Hyperspace needs two distinctions highlight.js does not make: control words (if, else, return…)
+// apart from declarations (var, function), and operators apart from the text. We mark them in finished .hljs blocks:
+// the class hs-ctl and span.hs-op — only while the dark Clean is selected.
 const CTL = new Set(("if else elif return for while do switch case default break continue throw try catch finally except raise " +
   "await yield new delete typeof instanceof in of import export from as with not and or is then fi done esac").split(" "));
 const FN = new Set(["function", "def", "fn", "func", "class", "lambda"]);
 const OP = /[=+\-*/%<>!?:|&^~.]+/g;
-const SKIP = 'span[class*="hljs-"], .mk, .hs-op';   // строки, комментарии и т. п., знак диффа, уже помеченное
+const SKIP = 'span[class*="hljs-"], .mk, .hs-op';   // strings, comments etc., the diff sign, already marked
 
-// дефис и косая внутри слова (th-clean-dark, src/app, -la) — часть имени, не оператор; точка — оператор только как
-// обращение к полю ($.event, foo().bar), а не в начале пути (./x) и не многоточие. Край текстового узла — граница токена
-// (соседний span), считаем его буквой.
+// a hyphen or a slash inside a word (th-clean-dark, src/app, -la) is part of the name, not an operator; a dot is an
+// operator only as field access ($.event, foo().bar), not at the start of a path (./x) and not an ellipsis. The edge of a
+// text node is a token boundary (a neighbouring span), we treat it as a letter.
 const WORD = /[\w$Ѐ-ӿ]/;
 function isOp(s, m) {
   const r = m[0], prev = m.index ? s[m.index - 1] : "a", next = s[m.index + r.length] ?? "a";
   if (r === ".") return /[\w$)\]]/.test(prev) && /[A-Za-z_$]/.test(next);
-  if (/^\.+$/.test(r) || /^[-/.]*[/.][-/.]*$/.test(r) && r.includes("/")) return false;   // многоточие, ./ ../
+  if (/^\.+$/.test(r) || /^[-/.]*[/.][-/.]*$/.test(r) && r.includes("/")) return false;   // ellipsis, ./ ../
   if (/^[-/]+$/.test(r)) return !WORD.test(prev) && !WORD.test(next);
   return true;
 }
@@ -101,7 +101,7 @@ function mark(root) {
   for (let t; (t = walk.nextNode());) {
     if (t.parentElement.closest(SKIP)) continue;
     const ops = [...t.data.matchAll(OP)].filter(m => isOp(t.data, m));
-    if (ops.length) texts.push([t, ops]);   // без настоящих операторов узел не трогаем (иначе наблюдатель зациклится)
+    if (ops.length) texts.push([t, ops]);   // without real operators the node is left alone (otherwise the observer loops)
   }
   for (const [t, ops] of texts) {
     const f = document.createDocumentFragment(); let at = 0;
@@ -115,13 +115,13 @@ function mark(root) {
   }
 }
 
-// ушли с тёмной Clean — вернуть код как был: операторы обратно в текст, классы слов снять
+// left the dark Clean — put the code back as it was: operators back into text, word classes removed
 function unmark() {
   for (const s of document.querySelectorAll(".hs-op")) s.replaceWith(s.textContent);
   for (const k of document.querySelectorAll(".hs-ctl, .hs-fn")) k.classList.remove("hs-ctl", "hs-fn");
 }
 
-// блоки кода приходят и перерисовываются в любой момент: собираем затронутые .hljs и метим их раз в кадр
+// code blocks arrive and are redrawn at any moment: collect the touched .hljs and mark them once per frame
 const dark = () => document.documentElement.classList.contains("th-clean") && document.documentElement.classList.contains("th-clean-dark");
 const queue = new Set(); let planned = false;
 function flush() {
@@ -130,7 +130,7 @@ function flush() {
   queue.clear();
 }
 function take(n) {
-  if (!dark()) return;   // без тёмной Clean страницу не трогаем
+  if (!dark()) return;   // without the dark Clean the page is left alone
   if (n.nodeType !== 1) n = n.parentElement;
   if (!n) return;
   const own = n.closest(".hljs");
@@ -144,7 +144,7 @@ export default function register(hub) {
   sync();
   window.addEventListener("hub-theme", sync);
   refresh();
-  // за кодом на странице следим, только пока выбрана тёмная Clean; ушли с неё — метки снимаем
+  // watch the code on the page only while the dark Clean is selected; on leaving it, remove the marks
   const code = new MutationObserver(ms => { for (const m of ms) { take(m.target); for (const n of m.addedNodes) take(n); } plan(); });
   const sync2 = () => {
     code.disconnect();

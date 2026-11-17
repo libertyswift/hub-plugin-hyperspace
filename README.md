@@ -1,35 +1,35 @@
-# Hyperspace — тема для Agents Hub
+# Hyperspace — a theme for Agents Hub
 
-Тёмно-фиолетовая тема страницы хаба: градиенты фона, боковой панели и кнопок, тёмные шапка и подвал, свои значки
-хаба и картинки вместо эмодзи агентов (🎨, 🧑‍💻, 🧪), цвета «Потока».
+A dark purple theme for the hub page: gradients on the background, the sidebar and the buttons, a dark header and
+footer, its own hub icons and pictures instead of the agents' emoji (🎨, 🧑‍💻, 🧪), and colors for "Flow".
 
-Поставить: «Настройки» → «Плагины» → поиск «hyperspace» (или хабу: «поставь плагин hyperspace»), выбрать —
-«Настройки» → «Тема» → Hyperspace.
+Install: "Settings" → "Plugins" → search for "hyperspace" (or tell the hub: "install the hyperspace plugin"), then pick
+it in "Settings" → "Theme" → Hyperspace.
 
-## Что в плагине
+## What is in the plugin
 
-- `hyperspace.json` — сама тема. `colors`, `icons`, `avatars` — как у любой темы хаба. Сверх них, для кода плагина:
-  - `gradients` — заливка поверхностей `page`, `sidebar`, `header`, `footer`, `primary`: градиент
-    `{"colors": ["#…", "#…"], "angle": 180}` (цвета равномерно) или просто цвет;
-  - `flow` — цвета «Потока»: `msg`, `task`, `result`;
-  - `iconColors` — цвет значков и аватаров: `icons`, `avatars`, поштучно — по имени значка (`send`, `clock`…) или по
-    эмодзи (`"🎨": "#a77bec"`). Картинки в `i/` и `a/` — только форма, цвет берётся отсюда.
-- `main.js` и `hyperspace.css` — накладывают `gradients`, `flow` и `iconColors` выбранной темы. Работают для любой темы
-  с этими блоками: можно взять плагин за основу своей темы.
+- `hyperspace.json` — the theme itself. `colors`, `icons`, `avatars` — as in any hub theme. On top of them, for the
+  plugin's code:
+  - `gradients` — the fill of the surfaces `page`, `sidebar`, `header`, `footer`, `primary`: a gradient
+    `{"colors": ["#…", "#…"], "angle": 180}` (colors spread evenly) or a plain color;
+  - `flow` — the colors of "Flow": `msg`, `task`, `result`;
+  - `iconColors` — the color of icons and avatars: `icons`, `avatars`, or one by one — by icon name (`send`, `clock`…)
+    or by emoji (`"🎨": "#a77bec"`). The pictures in `i/` and `a/` are shapes only; the color comes from here.
+- `main.js` and `hyperspace.css` — apply `gradients`, `flow` and `iconColors` of the selected theme. They work for any
+  theme with these blocks: you can take the plugin as a base for your own theme.
 
-Эмодзи агента без картинки в `avatars` остаётся эмодзи.
+An agent's emoji without a picture in `avatars` stays an emoji.
 
-## Clean в цветах Hyperspace
+## Clean in Hyperspace colors
 
-Плагин умеет переодевать тёмную тему Clean в Hyperspace: цвета и шрифты, окно цельное (панели встык, без зазоров и
-скруглений, общая полоса заголовка), фиолетовый акцент, подсветка кода как в редакторе. Состав страницы остаётся
-от Clean.
+The plugin can dress the dark Clean theme in Hyperspace: colors and fonts, a seamless window (panels edge to edge,
+no gaps or rounded corners, one shared title bar), a purple accent, code highlighting as in the editor. The page
+layout stays Clean's.
 
-1. Поставьте тему Clean — плагин `kalimullin/hub-plugin-clean` («Настройки» → «Плагины»).
-2. «Настройки» → «Тема» → выберите **тёмную** Clean.
+To turn it on, choose the **dark** Clean in "Settings" → "Theme" (Clean is built into the hub).
 
-Больше ничего включать не надо: `clean-hyperspace.css` подключается вместе с плагином, но все его правила работают только
-под тёмной Clean (`html.th-clean.th-clean-dark`) — без неё, в светлой Clean и в любой другой теме, в том числе в самой
-Hyperspace, страница не меняется.
+Nothing else to turn on: `clean-hyperspace.css` loads with the plugin, but all its rules apply only under the dark
+Clean (`html.th-clean.th-clean-dark`) — without it, in the light Clean and in any other theme, including Hyperspace
+itself, the page does not change.
 
-![Тёмная Clean в цветах Hyperspace](docs/clean-hyperspace.png)
+![Dark Clean in Hyperspace colors](docs/clean-hyperspace.png)
